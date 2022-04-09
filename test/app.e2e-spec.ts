@@ -4,7 +4,6 @@ import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { HttpService } from '@nestjs/axios';
 import { of } from 'rxjs';
-import exp from 'constants';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

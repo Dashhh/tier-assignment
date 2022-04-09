@@ -3,10 +3,10 @@ help: # Show this help (based on comments, generated using grep and sed)
 		 | sed -r 's/^([^:]+).*#\s*(.*)/\1                             \2/' \
 		 | sed -r 's/(.{30})\s*(\w.+)/\1 \2/'
 
-.PHONY: dev.build dev.run prod.build prod.run
+.PHONY: dev.build dev.run prod.build prod.run test
 
 down: # Stops container
-	docker stop tierAdamStarak
+	docker stop tierAdamStarak && docker rm tierAdamStarak
 
 dev.build: # Builds dev image
 	docker build -t tier:dev --target dev .
@@ -19,3 +19,9 @@ prod.build: # Builds prod image
 
 prod.run: # Start prod environment from docker image
 	docker run -it -p 3000:3000 tier:prod
+
+test: # run tests
+	docker run -it tier:dev yarn test
+
+test.e2e: # run e2e tests
+	docker run -it tier:dev yarn test:e2e
