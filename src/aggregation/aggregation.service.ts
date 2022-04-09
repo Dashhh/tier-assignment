@@ -31,6 +31,7 @@ export class AggregationService {
         point_count: 1,
         point_count_abbreviated: 1,
         pricingPlanId: vehicle.pricing_plan_id,
+        currentRangeMeters: vehicle.current_range_meters,
       },
       geometry: {
         coordinates: [vehicle.lat, vehicle.lon],

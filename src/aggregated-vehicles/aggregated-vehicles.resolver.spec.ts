@@ -85,5 +85,17 @@ describe('AggregatedVehiclesResolver', () => {
       });
       expect(result).toHaveLength(2);
     });
+    it('filters by range', async () => {
+      const spy = jest
+        .spyOn(tierService, 'docklessVehicles')
+        .mockImplementation(() => of(vehicles));
+
+      await resolver.aggregatedVehicles({
+        zoom: 13,
+        boundingBox: [48.75, 2.34, 48.883, 2.356],
+        minRange: 20000,
+      });
+      expect(spy).toBeCalledWith(20000);
+    });
   });
 });

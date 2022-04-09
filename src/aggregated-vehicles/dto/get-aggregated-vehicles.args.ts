@@ -12,4 +12,8 @@ export class GetAggregatedVehiclesArgs {
   @ArrayMinSize(4)
   @ArrayMaxSize(4)
   boundingBox: BoundingBox;
+
+  @Field((type) => [Int], { nullable: true })
+  @IsInt()
+  minRange?: number;
 }

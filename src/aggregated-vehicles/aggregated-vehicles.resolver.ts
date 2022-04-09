@@ -16,7 +16,9 @@ export class AggregatedVehiclesResolver {
   async aggregatedVehicles(
     @Args() args: GetAggregatedVehiclesArgs,
   ): Promise<AggregatedVehicle[]> {
-    const vehicles = await lastValueFrom(this.tierService.docklessVehicles());
+    const vehicles = await lastValueFrom(
+      this.tierService.docklessVehicles(args.minRange),
+    );
     const points = this.aggregationService.aggregateDocklessVehicles(
       vehicles,
       args.zoom,

@@ -192,5 +192,18 @@ describe('TierService', () => {
         expect(value).toHaveLength(0);
       });
     });
+    it('should filter by mileage', () => {
+      response.data = {
+        last_updated: 1649469444,
+        ttl: 0,
+        version: '2.2',
+        data: { bikes },
+      };
+      jest.spyOn(httpService, 'get').mockImplementation(() => of(response));
+
+      service.docklessVehicles().subscribe((value) => {
+        expect(value).toHaveLength(3);
+      });
+    });
   });
 });

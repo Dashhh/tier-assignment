@@ -9,7 +9,7 @@ import { PricingPlan } from './interfaces/pricing-plan.interface';
 export class TierService {
   constructor(private readonly httpService: HttpService) {}
 
-  docklessVehicles(): Observable<DocklessVehicle[]> {
+  docklessVehicles(minRange?: number): Observable<DocklessVehicle[]> {
     return this.httpService
       .get<Response<'bikes', DocklessVehicle[]>>(
         'https://data-sharing.tier-services.io/tier_paris/gbfs/2.2/free-bike-status',
@@ -19,9 +19,21 @@ export class TierService {
           if (response.status != 200) {
             return [];
           }
-          return response.data.data.bikes;
+          const vehicles = response.data.data.bikes;
+          return minRange
+            ? this.filterByRange(minRange, response.data.data.bikes)
+            : vehicles;
         }),
       );
+  }
+
+  private filterByRange(
+    minRange: number,
+    vehicles: DocklessVehicle[],
+  ): DocklessVehicle[] {
+    return vehicles.filter(
+      (vehicle) => vehicle.current_range_meters >= minRange,
+    );
   }
 
   pricingPlans(): Observable<PricingPlan[]> {

@@ -27,5 +27,5 @@ type AggregatedVehicle {
 }
 
 type Query {
-  aggregatedVehicles(zoom: Int!, boundingBox: [Float!]!): [AggregatedVehicle!]!
+  aggregatedVehicles(zoom: Int!, boundingBox: [Float!]!, minRange: [Int!]): [AggregatedVehicle!]!
 }
