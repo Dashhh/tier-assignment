@@ -22,6 +22,7 @@ type AggregatedVehicle {
   count: Int!
   vehicleId: String
   pricingPlanId: String
+  currentRangeMeters: Int
   pricingPlan: PricingPlan
   bbox: PricingPlan!
 }

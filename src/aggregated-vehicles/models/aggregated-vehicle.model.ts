@@ -39,6 +39,12 @@ export class AggregatedVehicle implements Point, Cluster {
     return this.properties.pricingPlanId;
   }
 
+  @Field(() => Int, { nullable: true })
+  @Expose()
+  get currentRangeMeters(): number | undefined {
+    return this.properties.currentRangeMeters;
+  }
+
   @Field(() => PricingPlan, { nullable: true })
   pricingPlan?: PricingPlan;
 
