@@ -6,6 +6,12 @@ type PricingPlan {
   currency: String!
 }
 
+type AggregatedVehicle {
+  lat: Float!
+  lon: Float!
+}
+
 type Query {
-  aggregatedVehicles: PricingPlan!
+  pricingPlans: PricingPlan!
+  aggregatedVehicles: [AggregatedVehicle!]!
 }

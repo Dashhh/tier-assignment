@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import Supercluster from 'supercluster';
 import { PointProps } from './types/point-props.type';
 import { ClusterProps } from './types/cluster-props.type';
-import { Point } from './types/point.type';
 import { BoundingBox } from './types/bounding-box.type';
 import { DocklessVehicle } from '../tier/interfaces/dockless-vehicle.interface';
+import { Point } from './types/point.type';
 
 @Injectable()
 export class AggregationService {

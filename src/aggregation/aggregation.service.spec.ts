@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AggregationService } from './aggregation.service';
-import { Point } from './types/point.type';
 import { DocklessVehicle } from '../tier/interfaces/dockless-vehicle.interface';
+import { Point } from './types/point.type';
 
 describe('AggregationService', () => {
   let service: AggregationService;
