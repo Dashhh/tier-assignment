@@ -4,16 +4,16 @@ import { BoundingBox } from '../../aggregation/types/bounding-box.type';
 
 @ArgsType()
 export class GetAggregatedVehiclesArgs {
-  @Field((type) => Int)
+  @Field(() => Int)
   @IsInt()
   zoom: number;
 
-  @Field((type) => [Float])
+  @Field(() => [Float])
   @ArrayMinSize(4)
   @ArrayMaxSize(4)
   boundingBox: BoundingBox;
 
-  @Field((type) => [Int], { nullable: true })
+  @Field(() => [Int], { nullable: true })
   @IsInt()
   minRange?: number;
 }

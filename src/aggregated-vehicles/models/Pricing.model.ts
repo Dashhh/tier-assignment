@@ -3,12 +3,12 @@ import { Pricing as TierPricing } from '../../tier/interfaces/pricing.interface'
 
 @ObjectType()
 export class Pricing implements TierPricing {
-  @Field((type) => Int, { nullable: true })
+  @Field(() => Int, { nullable: true })
   end?: number;
-  @Field((type) => Int)
+  @Field(() => Int)
   interval: number;
-  @Field((type) => Float)
+  @Field(() => Float)
   rate: number;
-  @Field((type) => Int)
+  @Field(() => Int)
   start: number;
 }

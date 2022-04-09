@@ -3,8 +3,7 @@ import { AggregatedVehiclesResolver } from './aggregated-vehicles.resolver';
 import { TierModule } from '../tier/tier.module';
 import { AggregationModule } from '../aggregation/aggregation.module';
 import { TierService } from '../tier/tier.service';
-import { of } from 'rxjs';
-import exp from 'constants';
+import { CacheModule } from '@nestjs/common';
 
 describe('AggregatedVehiclesResolver', () => {
   let resolver: AggregatedVehiclesResolver;
@@ -13,7 +12,7 @@ describe('AggregatedVehiclesResolver', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [AggregatedVehiclesResolver],
-      imports: [TierModule, AggregationModule],
+      imports: [CacheModule.register(), TierModule, AggregationModule],
     }).compile();
 
     resolver = module.get<AggregatedVehiclesResolver>(
@@ -74,21 +73,24 @@ describe('AggregatedVehiclesResolver', () => {
         },
       },
     ];
+
     it('return AggregatedVehicle', async () => {
       jest
         .spyOn(tierService, 'docklessVehicles')
-        .mockImplementation(() => of(vehicles));
+        .mockImplementation(() => new Promise((r) => r(vehicles)));
 
       const result = await resolver.aggregatedVehicles({
         zoom: 13,
         boundingBox: [48.75, 2.34, 48.883, 2.356],
       });
+
       expect(result).toHaveLength(2);
     });
+
     it('filters by range', async () => {
       const spy = jest
         .spyOn(tierService, 'docklessVehicles')
-        .mockImplementation(() => of(vehicles));
+        .mockImplementation(() => new Promise((r) => r(vehicles)));
 
       await resolver.aggregatedVehicles({
         zoom: 13,

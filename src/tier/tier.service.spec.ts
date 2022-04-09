@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TierService } from './tier.service';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { of } from 'rxjs';
+import { CacheModule } from '@nestjs/common';
 
 describe('TierService', () => {
   let service: TierService;
@@ -11,7 +12,7 @@ describe('TierService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [TierService],
-      imports: [HttpModule],
+      imports: [HttpModule, CacheModule.register()],
     }).compile();
 
     service = module.get<TierService>(TierService);
@@ -168,7 +169,7 @@ describe('TierService', () => {
         },
       },
     ];
-    it('should return dockless vehicles', () => {
+    it('should return dockless vehicles', async () => {
       response.data = {
         last_updated: 1649469444,
         ttl: 0,
@@ -177,22 +178,22 @@ describe('TierService', () => {
       };
       jest.spyOn(httpService, 'get').mockImplementation(() => of(response));
 
-      service.docklessVehicles().subscribe((value) => {
-        expect(value).toBe(bikes);
-      });
+      const result = await service.docklessVehicles();
+      expect(result).toBe(bikes);
     });
-    it('should return empty array on error', () => {
+
+    it('should return empty array on error', async () => {
       response = {
         ...response,
         status: 400,
       };
       jest.spyOn(httpService, 'get').mockImplementation(() => of(response));
 
-      service.docklessVehicles().subscribe((value) => {
-        expect(value).toHaveLength(0);
-      });
+      const result = await service.docklessVehicles();
+      expect(result).toHaveLength(0);
     });
-    it('should filter by mileage', () => {
+
+    it('should filter by mileage', async () => {
       response.data = {
         last_updated: 1649469444,
         ttl: 0,
@@ -201,9 +202,8 @@ describe('TierService', () => {
       };
       jest.spyOn(httpService, 'get').mockImplementation(() => of(response));
 
-      service.docklessVehicles().subscribe((value) => {
-        expect(value).toHaveLength(3);
-      });
+      const result = await service.docklessVehicles(20000);
+      expect(result).toHaveLength(3);
     });
   });
 });

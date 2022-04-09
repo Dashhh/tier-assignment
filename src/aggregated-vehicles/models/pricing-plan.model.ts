@@ -10,7 +10,7 @@ export class PricingPlan implements TierPricingPlan {
   description: string;
   @Field()
   name: string;
-  @Field((type) => [Pricing], { nullable: true })
+  @Field(() => [Pricing], { nullable: true })
   per_min_pricing?: Pricing[];
   is_taxable: boolean;
   per_km_pricing?: Pricing[];

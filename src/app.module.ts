@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { TierModule } from './tier/tier.module';
 import { AggregationModule } from './aggregation/aggregation.module';
 import { AggregatedVehiclesModule } from './aggregated-vehicles/aggregated-vehicles.module';
@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
+    CacheModule.register(),
     TierModule,
     AggregationModule,
     AggregatedVehiclesModule,

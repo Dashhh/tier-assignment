@@ -9,19 +9,19 @@ import { PricingPlan } from './pricing-plan.model';
 
 @ObjectType()
 export class AggregatedVehicle implements Point, Cluster {
-  @Field((type) => Float)
+  @Field(() => Float)
   @Expose()
   get lat(): number {
     return this.geometry.coordinates[0];
   }
 
-  @Field((type) => Float)
+  @Field(() => Float)
   @Expose()
   get lon(): number {
     return this.geometry.coordinates[1];
   }
 
-  @Field((type) => Int)
+  @Field(() => Int)
   @Expose()
   get count(): number {
     return this.properties.point_count;
@@ -39,10 +39,10 @@ export class AggregatedVehicle implements Point, Cluster {
     return this.properties.pricingPlanId;
   }
 
-  @Field((type) => PricingPlan, { nullable: true })
+  @Field(() => PricingPlan, { nullable: true })
   pricingPlan?: PricingPlan;
 
-  @Field((type) => PricingPlan)
+  @Field(() => PricingPlan)
   bbox: BBox | undefined;
   geometry: GeoJSONPoint;
 
