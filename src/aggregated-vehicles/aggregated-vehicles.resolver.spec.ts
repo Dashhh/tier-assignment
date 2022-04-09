@@ -79,10 +79,10 @@ describe('AggregatedVehiclesResolver', () => {
         .spyOn(tierService, 'docklessVehicles')
         .mockImplementation(() => of(vehicles));
 
-      const result = await resolver.aggregatedVehicles(
-        13,
-        [48.75, 2.34, 48.883, 2.356],
-      );
+      const result = await resolver.aggregatedVehicles({
+        zoom: 13,
+        boundingBox: [48.75, 2.34, 48.883, 2.356],
+      });
       expect(result).toHaveLength(2);
     });
   });

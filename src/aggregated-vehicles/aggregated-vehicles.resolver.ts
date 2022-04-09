@@ -1,10 +1,11 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { PricingPlan } from './models/pricing-plan.model';
 import { AggregatedVehicle } from './models/aggregated-vehicle.model';
 import { TierService } from '../tier/tier.service';
 import { AggregationService } from '../aggregation/aggregation.service';
 import { lastValueFrom } from 'rxjs';
 import { BoundingBox } from '../aggregation/types/bounding-box.type';
+import { GetAggregatedVehiclesArgs } from './dto/get-aggregated-vehicles.args';
 
 @Resolver((of) => PricingPlan)
 export class AggregatedVehiclesResolver {
@@ -20,14 +21,13 @@ export class AggregatedVehiclesResolver {
 
   @Query((returns) => [AggregatedVehicle])
   async aggregatedVehicles(
-    zoom: number,
-    boundingBox: BoundingBox,
+    @Args() args: GetAggregatedVehiclesArgs,
   ): Promise<AggregatedVehicle[]> {
     const vehicles = await lastValueFrom(this.tierService.docklessVehicles());
     const points = this.aggregationService.aggregateDocklessVehicles(
       vehicles,
-      zoom,
-      boundingBox,
+      args.zoom,
+      args.boundingBox,
     );
     return points.map((point) => new AggregatedVehicle(point));
   }

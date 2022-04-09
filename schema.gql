@@ -13,5 +13,5 @@ type AggregatedVehicle {
 
 type Query {
   pricingPlans: PricingPlan!
-  aggregatedVehicles: [AggregatedVehicle!]!
+  aggregatedVehicles(zoom: Int!, boundingBox: [Float!]!): [AggregatedVehicle!]!
 }
