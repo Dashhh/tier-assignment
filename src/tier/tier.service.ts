@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { map, Observable } from 'rxjs';
+import { lastValueFrom, map, Observable } from 'rxjs';
 import { DocklessVehicle } from './interfaces/dockless-vehicle.interface';
 import { Response } from './interfaces/response.interface';
 import { PricingPlan } from './interfaces/pricing-plan.interface';
@@ -27,7 +27,7 @@ export class TierService {
   pricingPlans(): Observable<PricingPlan[]> {
     return this.httpService
       .get<Response<'plans', PricingPlan[]>>(
-        'https://data-sharing.tier-services.io/tier_paris/gbfs/2.2/free-bike-status',
+        'https://data-sharing.tier-services.io/tier_paris/gbfs/2.2/system-pricing-plans',
       )
       .pipe(
         map((response) => {
@@ -37,5 +37,11 @@ export class TierService {
           return response.data.data.plans;
         }),
       );
+  }
+
+  pricingPlan(id: string): Observable<PricingPlan | undefined> {
+    return this.pricingPlans().pipe(
+      map((plans) => plans.find((plan) => plan.plan_id === id)),
+    );
   }
 }

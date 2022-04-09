@@ -1,23 +1,16 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { PricingPlan } from './models/pricing-plan.model';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AggregatedVehicle } from './models/aggregated-vehicle.model';
 import { TierService } from '../tier/tier.service';
 import { AggregationService } from '../aggregation/aggregation.service';
 import { lastValueFrom } from 'rxjs';
-import { BoundingBox } from '../aggregation/types/bounding-box.type';
 import { GetAggregatedVehiclesArgs } from './dto/get-aggregated-vehicles.args';
 
-@Resolver((of) => PricingPlan)
+@Resolver((of) => AggregatedVehicle)
 export class AggregatedVehiclesResolver {
   constructor(
     private readonly tierService: TierService,
     private readonly aggregationService: AggregationService,
   ) {}
-
-  @Query((returns) => PricingPlan)
-  pricingPlans() {
-    return new PricingPlan({ currency: 'USD' });
-  }
 
   @Query((returns) => [AggregatedVehicle])
   async aggregatedVehicles(
@@ -29,6 +22,14 @@ export class AggregatedVehiclesResolver {
       args.zoom,
       args.boundingBox,
     );
+
     return points.map((point) => new AggregatedVehicle(point));
+  }
+
+  @ResolveField()
+  pricingPlan(@Parent() aggregatedVehicle: AggregatedVehicle) {
+    if (aggregatedVehicle.pricingPlanId) {
+      return this.tierService.pricingPlan(aggregatedVehicle.pricingPlanId);
+    }
   }
 }

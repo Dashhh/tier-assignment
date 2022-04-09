@@ -4,8 +4,8 @@ import { Cluster } from '../../aggregation/types/cluster.type';
 import { BBox } from 'geojson';
 import { Point as GeoJSONPoint } from 'geojson';
 import { Expose } from 'class-transformer';
-import { ClusterProperties } from 'supercluster';
 import { ClusterProps } from '../../aggregation/types/cluster-props.type';
+import { PricingPlan } from './pricing-plan.model';
 
 @ObjectType()
 export class AggregatedVehicle implements Point, Cluster {
@@ -27,8 +27,25 @@ export class AggregatedVehicle implements Point, Cluster {
     return this.properties.point_count;
   }
 
+  @Field({ nullable: true })
+  @Expose()
+  get vehicleId(): string | undefined {
+    return this.properties.id;
+  }
+
+  @Field({ nullable: true })
+  @Expose()
+  get pricingPlanId(): string | undefined {
+    return this.properties.pricingPlanId;
+  }
+
+  @Field((type) => PricingPlan, { nullable: true })
+  pricingPlan?: PricingPlan;
+
+  @Field((type) => PricingPlan)
   bbox: BBox | undefined;
   geometry: GeoJSONPoint;
+
   id: string | number | undefined;
   type: 'Feature';
 
@@ -36,5 +53,7 @@ export class AggregatedVehicle implements Point, Cluster {
     Object.assign(this, partial);
   }
 
-  properties: ClusterProperties & ClusterProps;
+  properties: ClusterProps & {
+    id?: string;
+  };
 }

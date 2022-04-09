@@ -30,6 +30,7 @@ export class AggregationService {
         cluster_id: -1,
         point_count: 1,
         point_count_abbreviated: 1,
+        pricingPlanId: vehicle.pricing_plan_id,
       },
       geometry: {
         coordinates: [vehicle.lat, vehicle.lon],

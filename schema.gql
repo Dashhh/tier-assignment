@@ -2,17 +2,30 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Pricing {
+  end: Int
+  interval: Int!
+  rate: Float!
+  start: Int!
+}
+
 type PricingPlan {
   currency: String!
+  description: String!
+  name: String!
+  per_min_pricing: [Pricing!]
 }
 
 type AggregatedVehicle {
   lat: Float!
   lon: Float!
   count: Int!
+  vehicleId: String
+  pricingPlanId: String
+  pricingPlan: PricingPlan
+  bbox: PricingPlan!
 }
 
 type Query {
-  pricingPlans: PricingPlan!
   aggregatedVehicles(zoom: Int!, boundingBox: [Float!]!): [AggregatedVehicle!]!
 }

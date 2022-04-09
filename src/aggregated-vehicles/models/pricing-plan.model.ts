@@ -1,25 +1,19 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { PricingPlan as TierPricingPlan } from '../../tier/interfaces/pricing-plan.interface';
+import { Pricing } from './Pricing.model';
 
 @ObjectType()
 export class PricingPlan implements TierPricingPlan {
   @Field()
   currency: string;
+  @Field()
   description: string;
-  is_taxable: boolean;
+  @Field()
   name: string;
-  per_km_pricing: {
-    start: number;
-    rate: number;
-    interval: number;
-    end?: number;
-  }[];
-  per_min_pricing: {
-    start: number;
-    rate: number;
-    interval: number;
-    end?: number;
-  }[];
+  @Field((type) => [Pricing], { nullable: true })
+  per_min_pricing?: Pricing[];
+  is_taxable: boolean;
+  per_km_pricing?: Pricing[];
   plan_id: string;
   price: number;
   surge_pricing: boolean;

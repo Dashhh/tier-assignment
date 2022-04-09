@@ -1,3 +1,5 @@
+import { Pricing } from './pricing.interface';
+
 export interface PricingPlan {
   plan_id: string;
   url?: string;
@@ -6,17 +8,7 @@ export interface PricingPlan {
   price: number;
   is_taxable: boolean;
   description: string;
-  per_km_pricing?: {
-    start: number;
-    rate: number;
-    interval: number;
-    end?: number;
-  }[];
-  per_min_pricing?: {
-    start: number;
-    rate: number;
-    interval: number;
-    end?: number;
-  }[];
+  per_km_pricing?: Pricing[];
+  per_min_pricing?: Pricing[];
   surge_pricing?: boolean;
 }
