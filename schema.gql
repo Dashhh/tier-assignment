@@ -9,6 +9,7 @@ type PricingPlan {
 type AggregatedVehicle {
   lat: Float!
   lon: Float!
+  count: Int!
 }
 
 type Query {

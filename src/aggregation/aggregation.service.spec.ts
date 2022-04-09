@@ -23,17 +23,35 @@ describe('AggregationService', () => {
       const points: Point[] = [
         {
           type: 'Feature',
-          properties: { id: 'id' },
+          properties: {
+            id: 'id',
+            cluster: undefined,
+            cluster_id: -1,
+            point_count: 1,
+            point_count_abbreviated: 1,
+          },
           geometry: { coordinates: [1.111, 5.111], type: 'Point' },
         },
         {
           type: 'Feature',
-          properties: { id: 'id' },
+          properties: {
+            id: 'id',
+            cluster: undefined,
+            cluster_id: -1,
+            point_count: 1,
+            point_count_abbreviated: 1,
+          },
           geometry: { coordinates: [1.112, 5.112], type: 'Point' },
         },
         {
           type: 'Feature',
-          properties: { id: 'id' },
+          properties: {
+            id: 'id',
+            cluster: undefined,
+            cluster_id: -1,
+            point_count: 1,
+            point_count_abbreviated: 1,
+          },
           geometry: { coordinates: [2.111, 5.111], type: 'Point' },
         },
       ];

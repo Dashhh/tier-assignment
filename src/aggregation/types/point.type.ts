@@ -1,4 +1,4 @@
 import { Feature, Point as GeoJSONPoint } from 'geojson';
-import { PointProps } from './point-props.type';
+import { ClusterProps } from './cluster-props.type';
 
-export type Point = Feature<GeoJSONPoint, PointProps>;
+export type Point = Feature<GeoJSONPoint, ClusterProps>;
